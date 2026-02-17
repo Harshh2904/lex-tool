@@ -1,0 +1,5 @@
+# Generated files
+lex.yy.c
+
+# Vim swap files
+*.swp
