@@ -1,15 +1,19 @@
 %{
-#include <stdio.h>
+#include "y.tab.h"  // Include Yacc token definitions
 %}
 
 %%
-[0-9]+      { printf("NUMBER: %s\n", yytext); }
-[a-zA-Z]+   { printf("WORD: %s\n", yytext); }
-\n          { /* ignore newlines */ }
-.           { /* ignore other characters */ }
+[0-9]+      { return NUMBER; }
+[a-zA-Z]+   { return IDENTIFIER; }
+"+"         { return PLUS; }
+"-"         { return MINUS; }
+"*"         { return MULT; }
+"/"         { return DIV; }
+"("         { return '('; }
+")"         { return ')'; }
+[ \t]+      ;           /* ignore spaces and tabs */
+\n          { return '\n'; }  /* important: send newline to parser */
+.           { return yytext[0]; }
 %%
 
-int main(int argc, char **argv) {
-    yylex();   // call the lexer
-    return 0;
-}
+int yywrap() { return 1; }
